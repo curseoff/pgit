@@ -1,0 +1,6 @@
+usage: pgit <command> [<args>]
+
+These are common Pgit commands used in various situations:
+
+start a working area (see also: pgit help tutorial)
+   init       Create an empty Pgit repository or reinitialize an existing one
