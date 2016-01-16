@@ -2,8 +2,6 @@
 
 namespace Pgit;
 
-require ROOT_DIR . '/app/common.php';
-
 class Autoloader {
 	public static function load_class($class_name) {
 		$pathes =  array_map('underscore', explode('\\', $class_name));

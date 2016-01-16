@@ -18,8 +18,8 @@ class Command {
 		}
 
 		$name = $commands[0];
-		$command_name = "pgit-" . $commands[0];
-		$command_filepath = ROOT_DIR . '/' . $command_name;
+		$command_name = $commands[0];
+		$command_filepath = ROOT_DIR . '/commands/' . $command_name;
 
 		$commands[0] = $command_filepath;
 
@@ -40,7 +40,7 @@ class Command {
 		$install_path = \Pgit\Lib\Find::install_path();
 		if(strlen($install_path) > 0) define('INSTALL_PATH', $install_path);
 
-		$command = substr(basename($argv[0]), 5);
+		$command = basename($argv[0]);
 
 		$options = getopt(self::SHORTOPTS, self::LONGOPTS);
 

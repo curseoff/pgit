@@ -10,11 +10,15 @@ class Init extends Base {
 		else {
 			define('INSTALL_PATH' , BASE_DIR . '/.pgit');
 			$this->create();
-			
 		}
 	}
 
 	public function create() {
-		mkdir(INSTALL_PATH);
+		$this->create_dir(INSTALL_PATH . '/objects');
+	}
+
+	public function create_dir($path) {
+		echo ("create: " . $path. "\n");
+		mkdir($path, 0700, TRUE);
 	}
 }
