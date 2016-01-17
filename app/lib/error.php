@@ -4,6 +4,8 @@ namespace Pgit\Lib;
 
 class Error {
 	public function install() {
+		if(defined('INSTALL_PATH')) return true;
+
 		$this->message('install');
 	}
 

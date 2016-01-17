@@ -38,7 +38,10 @@ class Command {
 		define('BASE_DIR', getcwd());
 
 		$install_path = \Pgit\Lib\Find::install_path();
-		if(strlen($install_path) > 0) define('INSTALL_PATH', $install_path);
+		if(strlen($install_path) > 0) {
+			define('INSTALL_PATH', $install_path);
+			define('WORK_DIR', dirname($install_path));
+		}
 
 		$command = basename($argv[0]);
 
