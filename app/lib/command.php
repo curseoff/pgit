@@ -45,7 +45,6 @@ class Command {
 		$options = getopt(self::SHORTOPTS, self::LONGOPTS);
 
 		$class_name = '\\Pgit\\Command\\' . camelize($command);
-		
 		$instance = new $class_name($options);
 		$instance->run();
 	}
