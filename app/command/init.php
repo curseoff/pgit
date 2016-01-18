@@ -14,11 +14,14 @@ class Init extends Base {
 	}
 
 	public function create() {
-		$this->create_dir(INSTALL_PATH . '/objects');
+		chdir(ROOT_DIR);
+		dir_copy(ROOT_DIR . '/repository', INSTALL_PATH);
 	}
 
 	public function create_dir($path) {
 		echo ("create: " . $path. "\n");
 		mkdir($path, 0700, TRUE);
 	}
+
+
 }

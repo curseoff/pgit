@@ -9,7 +9,7 @@ class Status extends Base {
         $files = $this->files();
 
         foreach($files as $index => $file) {
-            echo sprintf("    \e[31m%s: %s\e[m\n", "new", $file);
+            echo sprintf("    \e[31m%s: %s\e[m\n", "new file", $file);
         }
     }
 

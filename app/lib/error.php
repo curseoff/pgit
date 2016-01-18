@@ -5,7 +5,6 @@ namespace Pgit\Lib;
 class Error {
 	public function install() {
 		if(defined('INSTALL_PATH')) return true;
-
 		$this->message('install');
 	}
 
@@ -13,6 +12,6 @@ class Error {
 		static $errors;
 
 		if($errors === null) $errors = \Spyc::YAMLLoad(ROOT_DIR . '/config/errors.yml');
-		echo $errors[$code] . "\n";
+		die($errors[$code] . "\n");
 	}
 }
