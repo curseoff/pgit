@@ -1,4 +1,5 @@
 <?php
+date_default_timezone_set('Asia/Tokyo');
 
 define('ROOT_DIR', __DIR__);
 require ROOT_DIR . '/app/common.php';

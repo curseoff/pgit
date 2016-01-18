@@ -17,11 +17,17 @@ function pp($body) {
 
 	$file = substr($debug['file'] , strlen(ROOT_DIR) + 1);
 	$line = $debug['line'];
+	ob_start();
 	echo "------------------------------------------------------\n";
+	echo date('Y-m-d H:i:s') . "\n";
 	echo sprintf("%s:%s\n", $file, $line);
 	echo "------------------------------------------------------\n";
 	print_r($body);
 	echo "\n\n";
+	$output = ob_get_contents();
+	ob_end_clean();
+	file_put_contents(ROOT_DIR . '/logs/pp_log', $output, FILE_APPEND);
+
 }
 
 function dir_copy($dir_name, $new_dir)
