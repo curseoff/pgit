@@ -23,17 +23,18 @@ class Command {
 			exit;
 		}
 
-		$this->sub($commands[0]);
+		$this->sub($commands);
 	}
 
-	function sub($name) {
+	function sub($commands) {
+		$name = $commands[0];
 		$error = new Error();
 		$error->command_exists($name);
 
 		$options = getopt(self::SHORTOPTS, self::LONGOPTS);
 		
 		$class_name = 'Pgit\\Command\\' . camelize($name);
-		$instance = new $class_name($options);
+		$instance = new $class_name($commands, $options);
 		$instance->run();
 	}
 }
