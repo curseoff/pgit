@@ -8,7 +8,7 @@ class Command {
 		"shared:"
 	];
 
-	function run($argv) {
+	function main($argv) {
 		define('BASE_DIR', getcwd());
 		$install_path = \Pgit\Lib\Find::install_path();
 		if(strlen($install_path) > 0) {
@@ -23,21 +23,16 @@ class Command {
 			exit;
 		}
 
-		$name = $commands[0];
+		$this->sub($commands[0]);
+	}
 
-		
-		$class_name = 'Pgit\\Command\\' . camelize($name);
-
-		$filename = \Pgit\Autoloader::load_class_path($class_name);
-
-		if(!file_exists($filename)) {
-			$message = sprintf("pgit: '%s' is not a git command. See 'pgit --help'\n", $name);
-			echo $message;
-			exit;
-		}
+	function sub($name) {
+		$error = new Error();
+		$error->command_exists($name);
 
 		$options = getopt(self::SHORTOPTS, self::LONGOPTS);
 		
+		$class_name = 'Pgit\\Command\\' . camelize($name);
 		$instance = new $class_name($options);
 		$instance->run();
 	}

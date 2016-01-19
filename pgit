@@ -4,4 +4,4 @@
 require __DIR__ . '/config.php';
 
 $command = new \Pgit\Lib\Command();
-$command->run($argv);
+$command->main($argv);

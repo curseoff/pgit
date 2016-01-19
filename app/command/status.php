@@ -2,9 +2,9 @@
 
 namespace Pgit\Command;
 
-class Status extends Base {
+class Status extends \Pgit\Lib\Base {
     public function run() {
-        $this->error->install();
+        $this->error->repository_exists();
 
         $files = $this->files();
 

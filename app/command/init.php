@@ -2,13 +2,15 @@
 
 namespace Pgit\Command;
 
-class Init extends Base {
+class Init extends \Pgit\Lib\Base {
 	public function run() {
 		if(defined('INSTALL_PATH')) {
 			echo sprintf("Reinitialized existing Git repository in %s\n", INSTALL_PATH);
 		}
 		else {
 			define('INSTALL_PATH' , BASE_DIR . '/.pgit');
+			echo sprintf("Initialized empty Pgit repository in %s/\n", INSTALL_PATH);
+
 			$this->create();
 		}
 	}

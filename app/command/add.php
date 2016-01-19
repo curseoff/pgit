@@ -2,9 +2,9 @@
 
 namespace Pgit\Command;
 
-class Add extends Base {
+class Add extends \Pgit\Lib\Base {
 	public function run() {
-		$this->error->install();
+		$this->error->repository_exists();
 
 		pp(1);
 	}
