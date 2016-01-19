@@ -9,7 +9,7 @@ class Status extends \Pgit\Lib\Base {
         $files = $this->files();
 
         foreach($files as $index => $file) {
-            echo sprintf("    \e[31m%s: %s\e[m\n", "new file", $file);
+            echo \Pgit\Lib\Color::red(sprintf("    %s: %s\n", "new file", $file));
         }
     }
 
