@@ -1,6 +1,0 @@
-#!/usr/bin/env php
-<?php
-require __DIR__ . '/config.php';
-
-$command = new \Pgit\Lib\Command();
-$command->exec($argv);
