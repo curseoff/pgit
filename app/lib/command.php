@@ -33,7 +33,8 @@ class Command {
 
 		$options = getopt(self::SHORTOPTS, self::LONGOPTS);
 		
-		$class_name = 'Pgit\\Command\\' . camelize($name);
+		$class_name = 'Pgit\\Command\\' . camelize(strtr($name, '-', '_'));
+
 		$instance = new $class_name($commands, $options);
 		$instance->run();
 	}

@@ -9,10 +9,10 @@ class Error {
 	}
 
 	public function command_exists($name) {
-		$class_name = 'Pgit\\Command\\' . camelize($name);
+		$class_name = 'Pgit\\Command\\' . camelize(strtr($name, '-', '_'));
 		$filename = \Pgit\Autoloader::load_class_path($class_name);
 
-		if(!file_exists($filename)) {
+		if(!file_exists($filename) or !preg_match("#^[a-z\-]+$#", $name)) {
 			$message = sprintf("pgit: '%s' is not a git command. See 'pgit --help'\n", $name);
 			echo $message;
 			exit;
