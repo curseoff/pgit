@@ -4,16 +4,20 @@ namespace Pgit\Lib;
 
 class Blob {
 	function create($add_filename) {
-		$body = file_get_contents(WORK_DIR . '/' . $add_filename);
-		$blob = gzcompress('blob 0' . $body, 9);
-		$sha1 = sha1($blob);
-
+		$filepath = WORK_DIR . '/' . $add_filename;
+		$sha1 = sha1_file($filepath);
+		$filesize = filesize($filepath);
+		
 		$filename = $this->filename($sha1);
 
+		$index = new \Pgit\Lib\Index();
+		$index->add($add_filename, $sha1, $filesize);
+
 		if(file_exists($filename)) {
-			return true;
+			return $sha1;
 		}
 
+		$blob = gzcompress('blob ' . $filesize . ' 0/' . file_get_contents($filepath), 9);
 		mkdir(dirname($filename), 0777, TRUE);
 		file_put_contents($filename, $blob);
 	}
@@ -27,7 +31,9 @@ class Blob {
 		}
 
 		$body = gzuncompress(file_get_contents($filename));
-		return preg_replace("#^(blob|commit|tag|tree) 0#", '', $body);
+		$body = preg_replace("#^(.+?0/)#", '', $body);
+
+		return $body;
 	}
 
 	function filename($sha1) {
