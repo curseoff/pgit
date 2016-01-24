@@ -2,6 +2,11 @@
 
 namespace Pgit\Lib;
 
+use \GetOptionKit\OptionCollection;
+use \GetOptionKit\OptionParser;
+use \GetOptionKit\OptionPrinter\ConsoleOptionPrinter;
+use \GetOptionKit\ContinuousOptionParser;
+
 class Command {
 	const SHORTOPTS = "p";
 	const LONGOPTS = [
@@ -16,27 +21,42 @@ class Command {
 			define('WORK_DIR', dirname($install_path));
 		}
 
-		$commands = array_slice($argv, 1);
-
-		if(count($commands) == 0) {
-			echo Man::get('help') . "\n";
-			exit;
-		}
-
-		$this->sub($commands);
+		$this->sub($argv);
 	}
 
-	function sub($commands) {
-		$name = $commands[0];
-		$error = new Error();
-		$error->command_exists($name);
+	function sub($argv) {
+		$subcommands = [
+			'init',
+			'add',
+		];
 
-		$options = getopt(self::SHORTOPTS, self::LONGOPTS);
-		
-		$class_name = 'Pgit\\Command\\' . camelize(strtr($name, '-', '_'));
+		$cmdspecsInit = new OptionCollection;
+		$cmdspecsInit->add('f|foo:', 'option requires a value.' )->isa('String');
 
-		$instance = new $class_name($commands, $options);
-		$instance->run();
+		$cmdspecsAdd = new OptionCollection;
+		$cmdspecsAdd->add('f|foo:', 'option requires a value.' )->isa('String');
+
+		$subcommandSpecs = array(
+			'init' => $cmdspecsInit,
+			'add' => $cmdspecsAdd,
+		);
+
+		$parser = new ContinuousOptionParser($cmdspecsAdd );
+		$app_options = $parser->parse( $argv );
+
+		while (! $parser->isEnd()) {
+			if (@$subcommands[0] && $parser->getCurrentArgument() == $subcommands[0]) {
+				$parser->advance();
+				$subcommand = array_shift( $subcommands );
+				$parser->setSpecs( $subcommandSpecs[$subcommand] );
+				$subcommandOptions[ $subcommand ] = $parser->continueParse();
+				pp($subcommandOptions);
+
+			} else {
+				$arguments[] = $parser->advance();
+			#	pp($arguments);
+			}
+		}
 	}
 }
 
