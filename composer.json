@@ -1,5 +1,6 @@
 {
     "require": {
-        "mustangostang/spyc": "*"
+        "mustangostang/spyc": "*",
+        "ulrichsg/getopt-php": "2.3.*"
     }
 }
