@@ -12,7 +12,7 @@ class Blob {
 
 		$index = new \Pgit\Lib\Index();
 		$index->add($add_filename, $sha1, $filesize);
-
+		
 		if(file_exists($filename)) {
 			return $sha1;
 		}
