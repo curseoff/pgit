@@ -3,7 +3,11 @@
 namespace Pgit\Lib;
 
 class Color {
-	public static function red($message) {
-		return sprintf("\e[31m%s\e[m", $message);
+	const colors = [
+		'red' => 31,
+		'green' => 32,
+	];
+	public static function text($color, $message) {
+		return sprintf("\e[%dm%s\e[m", self::colors[$color], $message);
 	}
 }
