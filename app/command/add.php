@@ -2,6 +2,9 @@
 
 namespace Pgit\Command;
 
+use \Ulrichsg\Getopt\Getopt;
+use \Ulrichsg\Getopt\Option;
+
 class Add extends \Pgit\Lib\Base {
 	public function run() {
 		$this->error->repository_exists();
@@ -24,4 +27,20 @@ Maybe you wanted to say 'pgit add .'?\n";
 		$blob = new \Pgit\Lib\Blob();
 		$sha1 = $blob->create($add_filename);
 	}
+
+	protected function set_options() {
+		$getopt = new \Ulrichsg\Getopt\Getopt([
+			new \Ulrichsg\Getopt\Option('p', 'patch', \Ulrichsg\Getopt\Getopt::REQUIRED_ARGUMENT)
+		]);
+
+		try {
+    			$getopt->parse();
+    			pp($getopt->getOptions());
+    		} catch (UnexpectedValueException $e) {
+    			echo "Error: ".$e->getMessage()."\n";
+		      echo $getopt->getHelpText();
+    			exit(1);
+    		}
+	}
+
 }

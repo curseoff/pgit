@@ -6,10 +6,11 @@ abstract class Base {
 	protected $options;
 	protected $error;
 	protected $commands;
+
+	abstract protected function set_options();
  
-	function __construct($commands, $options) {
-		$this->options = $options;
-		$this->commands = $commands;
+	function __construct() {
 		$this->error = new \Pgit\Lib\Error();
+		$this->set_options();
 	}
 }

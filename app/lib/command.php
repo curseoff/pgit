@@ -1,6 +1,8 @@
 <?php
 
 namespace Pgit\Lib;
+use \Ulrichsg\Getopt\Getopt;
+use \Ulrichsg\Getopt\Option;
 
 class Command {
 	const SHORTOPTS = "p";
@@ -27,6 +29,24 @@ class Command {
 	}
 
 	function sub($commands) {
+#\
+
+		$getopt = new Getopt([
+			new Option('p', 'patch', Getopt::REQUIRED_ARGUMENT)
+		]);
+
+		try {
+    			$getopt->parse();
+    			pp($getopt->getOptions());
+    		#	pp($getopt->getHelpText());
+
+    		} catch (UnexpectedValueException $e) {
+    			echo "Error: ".$e->getMessage()."\n";
+		      echo $getopt->getHelpText();
+    			exit(1);
+    		}
+
+    		exit;
 		$name = $commands[0];
 		$error = new Error();
 		$error->command_exists($name);
@@ -35,7 +55,7 @@ class Command {
 		
 		$class_name = 'Pgit\\Command\\' . camelize(strtr($name, '-', '_'));
 
-		$instance = new $class_name($commands, $options);
+		$instance = new $class_name();
 		$instance->run();
 	}
 }

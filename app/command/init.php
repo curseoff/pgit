@@ -25,5 +25,9 @@ class Init extends \Pgit\Lib\Base {
 		mkdir($path, 0700, TRUE);
 	}
 
+	protected function options() {
+		
+	}
+
 
 }
