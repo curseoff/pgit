@@ -1,7 +1,31 @@
 #!/usr/bin/env php
 <?php
 
+namespace Pgit;
+
 require __DIR__ . '/config.php';
 
-$command = new \Pgit\Lib\Command();
-$command->main($argv);
+use \GetOptionKit\OptionCollection;
+use \GetOptionKit\OptionParser;
+use \GetOptionKit\OptionPrinter\ConsoleOptionPrinter;
+use \GetOptionKit\ContinuousOptionParser;
+
+
+$cmdspecs = new OptionCollection;
+$cmdspecs->add('f|force:', 'options for select')->isa('Number');
+$cmdspecs->add('p|patch:')->isa('Number');
+$subcommandSpecs = [
+	'init' => $cmdspecs,
+];
+
+$parser = new OptionParser($cmdspecs);
+
+$parser->setSpecs($cmdspecs);
+$result = $parser->parse($argv);
+
+
+#var_dump($result);
+
+
+$printer = new ConsoleOptionPrinter();
+echo $printer->render($cmdspecs);
